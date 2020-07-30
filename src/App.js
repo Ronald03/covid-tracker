@@ -6,6 +6,7 @@ import Map from './Map';
 import Table from './Table';
 import LineGraph from "./LineGraph.js"
 import { sortData } from "./util.js";
+import "leaflet/dist/leaflet.css";
 
 // API
 // "https://disease.sh/v3/covid-19/countries" 
@@ -15,6 +16,8 @@ function App() {
   const [country, setCountry] = useState("Worldwide");
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
+  const [mapCenter, setMapCenter] = useState({lat: 34.80746, lng: -40.4796});
+  const [mapZoom, setMapZoom] = useState(3)
   
 
   
@@ -91,7 +94,9 @@ function App() {
         </div>
 
         {/* Map */}
-        <Map />
+        <Map 
+        center={mapCenter}
+        zoom={mapZoom} />
       </div>
 
       <Card className="app__right">  
