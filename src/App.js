@@ -5,7 +5,7 @@ import InfoBox from './InfoBox.js'
 import Map from './Map';
 import Table from './Table';
 import LineGraph from "./LineGraph.js"
-import { sortData } from "./util.js";
+import { sortData, prettyPrintStat } from "./util.js";
 import "leaflet/dist/leaflet.css";
 
 // API
@@ -89,11 +89,11 @@ function App() {
         {/* InfoBoxes */}
         <div className="app__stats">
           {/* InfoBox title="Cooronavirus cases" */}
-          <InfoBox title="Coronavirus Cases" cases={countryInfo.todayCases} totals={countryInfo.cases} />
+          <InfoBox title="Coronavirus Cases" cases={ prettyPrintStat(countryInfo.todayCases)} totals={prettyPrintStat(countryInfo.cases)} />
           {/* INfoBox title="Coronavirus recoveries" */}
-          <InfoBox title="Recovered" cases={countryInfo.todayRecovered} totals={countryInfo.recovered} />
+          <InfoBox title="Recovered" cases={prettyPrintStat(countryInfo.todayRecovered)} totals={prettyPrintStat(countryInfo.recovered)} />
           {/* InfoBox Coronavirus deaths */}
-          <InfoBox title="Deaths" cases={countryInfo.todayDeaths} totals={countryInfo.deaths} />
+          <InfoBox title="Deaths" cases={prettyPrintStat(countryInfo.todayDeaths)} totals={prettyPrintStat(countryInfo.deaths)} />
         </div>
 
         {/* Map */}
