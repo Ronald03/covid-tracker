@@ -19,6 +19,7 @@ function App() {
   const [mapCenter, setMapCenter] = useState( {lat: 34.80746, lng: -40.4796} );
   const [mapZoom, setMapZoom] = useState(3)
   const [mapCountries, setMapCountries] = useState([]);
+  const [casesType, setCasesType] = useState("cases")
   
 
   
@@ -88,16 +89,36 @@ function App() {
 
         {/* InfoBoxes */}
         <div className="app__stats">
-          {/* InfoBox title="Cooronavirus cases" */}
-          <InfoBox title="Coronavirus Cases" cases={ prettyPrintStat(countryInfo.todayCases)} totals={prettyPrintStat(countryInfo.cases)} />
-          {/* INfoBox title="Coronavirus recoveries" */}
-          <InfoBox title="Recovered" cases={prettyPrintStat(countryInfo.todayRecovered)} totals={prettyPrintStat(countryInfo.recovered)} />
-          {/* InfoBox Coronavirus deaths */}
-          <InfoBox title="Deaths" cases={prettyPrintStat(countryInfo.todayDeaths)} totals={prettyPrintStat(countryInfo.deaths)} />
+          <InfoBox 
+            isRed
+            active={casesType === "cases"}
+            title="Coronavirus Cases" 
+            cases={ prettyPrintStat(countryInfo.todayCases)} 
+            totals={prettyPrintStat(countryInfo.cases)} 
+            onClick={(e) => setCasesType('cases')}
+          />
+
+          <InfoBox 
+            active={casesType === "recovered"}
+            title="Recovered" 
+            cases={prettyPrintStat(countryInfo.todayRecovered)} 
+            totals={prettyPrintStat(countryInfo.recovered)} 
+            onClick={(e) => setCasesType('recovered')}
+          />
+
+          <InfoBox 
+            isRed
+            active={casesType === "deaths"}
+            title="Deaths" 
+            cases={prettyPrintStat(countryInfo.todayDeaths)} 
+            totals={prettyPrintStat(countryInfo.deaths)} 
+            onClick={(e) => setCasesType('deaths')}
+          />
         </div>
 
         {/* Map */}
         <Map 
+        casesType={casesType}
         countries={mapCountries}
         center={mapCenter}
         zoom={mapZoom} />
@@ -109,8 +130,8 @@ function App() {
           <h3>Live Cases byCountry</h3>
           <Table countries= {tableData} />
           {/* Graph */}
-          <h3>Worldwide new cases</h3>
-          <LineGraph />
+          <h3>Worldwide new {casesType}</h3>
+          <LineGraph className="app__graph" casesType={casesType} />
         </CardContent>
       </Card>
 
